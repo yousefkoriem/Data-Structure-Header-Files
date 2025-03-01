@@ -56,8 +56,8 @@ public:
 	void insert_at(T val, size_t pos);
 	void erase_at(size_t pos);
 
-	void print();
-	size_t find(T key);
+	void print() const;
+	size_t find(T key) const;
 
 	size_t size() const { return sz; }
 	bool empty() const { return sz == 0; }
@@ -235,7 +235,7 @@ void LinkedList<T>::erase_at(size_t pos) {
 }
 
 template<typename T>
-void LinkedList<T>::print()
+void LinkedList<T>::print() const
 {
 	Node<T>* curr = HeadT;
 	std::cout << "List: " << curr->data;
@@ -246,7 +246,7 @@ void LinkedList<T>::print()
 }
 
 template<typename T>
-inline size_t LinkedList<T>::find(T key)
+inline size_t LinkedList<T>::find(T key) const
 {
 	Node<T>* curr = HeadT;
 	size_t pos = 0;
