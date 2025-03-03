@@ -5,7 +5,6 @@
 #include "LinkedListNode.h"
 #include "LinkedListIterator.h"
 #include <iostream>
-using namespace std;
 
 // Making Shorthand for Node
 template<typename T> using Node = LinkedListNode<T>;
@@ -58,14 +57,14 @@ public:
 	}
 
 	// Pure Virtual Functions for Ordrered and Unordered LinkedLists
-	bool search(const T& key) const = 0;
-	void insertFirst(const T& val) = 0;
-	void insertLast(const T& val) = 0;
-	void deleteNode(const T& val) = 0;
+	virtual bool search(const T& key) const = 0;
+	virtual void insertFirst(const T& val) = 0;
+	virtual void insertLast(const T& val) = 0;
+	virtual void deleteNode(const T& val) = 0;
 
 	// Iterator for the start and end of LinkedList
-	iterator begin() { return (iterator)ptr(first); }
-	iterator end() { return (iterator)ptr(nullptr); }
+	iterator begin() const { return iterator(first); }
+	iterator end() const { return iterator(nullptr); }
 	// end() isn't the last element but beyond it
 
 	// Default Constructor
@@ -90,9 +89,8 @@ template<typename T>
 void LinkedListType<T>::copyList(const LinkedListType<T>& lst) {
 	Node<T>* newNode;
 	Node<T>* curr;
-
-	if (this->first != nullptr) destroylist();
-	if (lst.first == nullptr) {
+	if (this->begin() != this->end()) destroylist();
+	if (lst.begin() == lst.end()) {
 		this->first = nullptr;
 		this->last = nullptr;
 		this->count = 0;
@@ -123,11 +121,10 @@ void LinkedListType<T>::initailizeList() {
 
 template<typename T>
 void LinkedListType<T>::print() const {
-	Node<T> *curr = head;
-	cout << head->data;
-	while ((curr = curr->next) != nullptr) {
-		cout << " -> " << curr->data;
-	}
+	iterator it = this->begin();
+	std::cout << *it++;
+	for (it; it != this->end(); ++it) std::cout << " -> " << *it;
+	std::cout << '\n';
 }
 
 template<typename T>

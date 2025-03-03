@@ -24,14 +24,14 @@ public:
 
 
 	// Derefrencing operator
-	T& operator*() { return ptr->data; } // returns reference to data -can be edited-
+	T& operator*() const { return ptr->data; } // returns reference to data -can be edited-
 
 	// Increment operator -> traverse in LinkedList
 	LinkedListIterator& operator++() { // Prefix
 		ptr = ptr->next;
 		return *this;
 	}
-	LinkedListIterator operator++(int) { // Postfix
+	LinkedListIterator& operator++(int) { // Postfix
 		LinkedListIterator temp = *this;
 		ptr = ptr->next;
 		return temp;
@@ -46,4 +46,5 @@ public:
 		ptr = it.ptr;
 		return *this;
 	}
+	Node<T>* operator->() { return ptr; }
 };

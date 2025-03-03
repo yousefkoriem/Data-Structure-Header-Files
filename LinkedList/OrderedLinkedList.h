@@ -2,7 +2,7 @@
 #include "LinkedListNode.h"
 #include "LinkedListIterator.h"
 #include "LinkedListType.h"
-
+#include <cassert>
 
 // Making Shorthand for Node
 template<typename T> using Node = LinkedListNode<T>;
@@ -31,30 +31,28 @@ public:
 
 template<typename T>
 bool OrderedLinkedList<T>::search(const T& key) const {
-	Node<T>* curr = first;
-	while (curr != nullptr) {
-		if (curr->data == key) return true;
-		curr = curr->next;
+	for(typename LinkedListType<T>::iterator it = LinkedListType<T>::begin(); it != LinkedListType<T>::end(); ++it) {
+    if(*it >= key) return *it == key;
 	}
 	return false;
 }
 
 template<typename T>
 void OrderedLinkedList<T>::insert(const T& val) {
-	Node<T>* curr;
+	Node<T>* curr = LinkedListType<T>::first;
 	Node<T>* newNode = new Node<T>(val);
 
-	if (first == nullptr) {
-		first = newNode;
-		last = first;
-		++count;
+	if (LinkedListType<T>::begin() == LinkedListType<T>::end()) {
+		LinkedListType<T>::first = newNode;
+		LinkedListType<T>::last = LinkedListType<T>::first;
+		++LinkedListType<T>::count;
 		return;
 	}
-	if (first->data <= val) {
+	if (*LinkedListType<T>::begin() <= val) {
 		insertFirst(val);
 		return;
 	}
-	while (curr->next != nullptr && curr->next->data < key) {
+	while (curr->next != nullptr && curr->next->data < val) {
 		curr = curr->next;
 	}
 	if (curr->next == nullptr) {
@@ -63,39 +61,39 @@ void OrderedLinkedList<T>::insert(const T& val) {
 	}
 	newNode->next = curr->next;
 	curr->next = newNode;
-	++count;
+	++LinkedListType<T>::count;
 }
 
 template<typename T>
 void OrderedLinkedList<T>::insertFirst(const T& val) {
 	Node<T>* newNode = new Node<T>(val);
-	++count;
-	if (first == nullptr) {
-		first = newNode;
-		last = first;
+	++LinkedListType<T>::count;
+	if (LinkedListType<T>::begin() == LinkedListType<T>::end()) {
+		LinkedListType<T>::first = newNode;
+		LinkedListType<T>::last = LinkedListType<T>::first;
 		return;
 	}
-	newNode->next = first;
-	first = newNode;
+	newNode->next = LinkedListType<T>::first;
+	LinkedListType<T>::first = newNode;
 }
 
 template<typename T>
 void OrderedLinkedList<T>::insertLast(const T& val) {
 	Node<T>* newNode = new Node<T>(val);
-	++count;
-	if (last == nullptr) {
-		first = newNode;
-		last = first;
+	++LinkedListType<T>::count;
+	if (LinkedListType<T>::last == nullptr) {
+		LinkedListType<T>::first = newNode;
+		LinkedListType<T>::last = LinkedListType<T>::first;
 		return;
 	}
-	last->next = newNode;
-	last = last->next;
+	LinkedListType<T>::last->next = newNode;
+	LinkedListType<T>::last = LinkedListType<T>::last->next;
 }
 
 template<typename T>
 void OrderedLinkedList<T>::deleteNode(const T& val) {
-	assert(first != nullptr);
-	Node<T>* curr = first;
+	assert(LinkedListType<T>::begin() != LinkedListType<T>::end());
+	Node<T>* curr = LinkedListType<T>::first;
 	while (curr->next != nullptr) {
 		if (curr->next->data == val) {
 			Node<T>* temp = curr->next;
