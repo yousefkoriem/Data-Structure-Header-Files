@@ -26,6 +26,23 @@ public:
 	// Calling iterator from LinkedList class
 	using iterator = LinkedListIterator<T>;
 
+	// Default Constructor
+	LinkedListType() {
+		first = nullptr;
+		last = nullptr;
+		count = 0;
+	}
+
+	// Copy Constructor
+	LinkedListType(const LinkedListType<T>& lst) {
+		copyList(lst);
+	}
+
+	// Destructor
+	~LinkedListType() {
+		destroylist();
+	}
+
 	// Assignment operator for LinkedList
 	const LinkedListType<T>& operator=(const LinkedListType<T>& lst); // Returning ineditible reference for LinkedList
 
@@ -67,22 +84,8 @@ public:
 	iterator end() const { return iterator(nullptr); }
 	// end() isn't the last element but beyond it
 
-	// Default Constructor
-	LinkedListType() {
-		first = nullptr;
-		last = nullptr;
-		count = 0;
-	}
-
-	// Copy Constructor
-	LinkedListType(const LinkedListType<T>& lst) {
-		copyList(lst);
-	}
-
-	// Destructor
-	~LinkedListType() {
-		destroylist();
-	}
+	Node<T>* head() const { return first; }
+	Node<T>* tail() const { return last; }
 };
 
 template<typename T>

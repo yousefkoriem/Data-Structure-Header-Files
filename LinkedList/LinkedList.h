@@ -14,6 +14,7 @@ class LinkedList
 	Node<T>* HeadT;
 	Node<T>* TailT;
 	size_t sz;
+	void copyList(const LinkedList<T>& lst);
 public:
 	using iterator = LinkedListIterator<T>;
 
@@ -28,22 +29,15 @@ public:
 		sz = 1;
 	}
 	LinkedList(const LinkedList<T>& lst) {
-		LinkedList<T>();
-		Node<T>* curr = lst.HeadT;
-		while (curr != nullptr) {
-			push_back(curr->data);
-			curr = curr->next;
-		}
+		copyList(lst);
 	}
 	~LinkedList() {
-		while (HeadT != nullptr) {
-			Node<T>* temp = HeadT;
-			HeadT = HeadT->next;
-			delete temp;
-		}
-		sz = 0;
-		HeadT = TailT = nullptr;
+		destroylist();
 	}
+
+	void initailizelist();
+	void destroylist();
+
 	void push_front(T val);
 	T pop_front();
 
@@ -59,6 +53,7 @@ public:
 	void print() const;
 	size_t find(T key) const;
 
+
 	size_t size() const { return sz; }
 	bool empty() const { return sz == 0; }
 
@@ -71,15 +66,15 @@ public:
 		if (pos >= sz) 
 			throw out_of_range("Index out of range");
 		if(pos == 0)
-			return HeadT->data;
+			return front();
 		if(pos == sz - 1)
-			return TailT->data;
+			return back();
 
-		Node<T>* curr = HeadT;
-		for (size_t i = 0; i < pos; ++i) {
-			curr = curr->next;
+		iterator it = begin();
+		for (size_t i = 1; i <= pos && it != end(); ++i) {
+			++it;
 		}
-		return curr->data;
+		return *it;
 	}
 	LinkedList<T>& operator+=(T val);
 	LinkedList<T>& operator+=(const LinkedList<T>& lst);
@@ -87,9 +82,24 @@ public:
 	friend ostream& operator<< <>(ostream& os, LinkedList<T>& lst);
 	friend istream& operator>> <>(istream& is, LinkedList<T>& lst);
 
-	iterator begin() { return iterator(HeadT); }
-	iterator end() { return iterator(nullptr); }
+	iterator begin() const { return iterator(HeadT); }
+	iterator end() const { return iterator(nullptr); }
 };
+
+
+
+template<typename T>
+void LinkedList<T>::copyList(const LinkedList<T>& lst) {
+	Node<T>* newNode;
+	Node<T>* curr;
+	if (this->begin() != this->end()) destroylist();
+	if (lst.begin() == lst.end())
+		return;
+	for (iterator it = lst.begin(); it != lst.end(); ++it) {
+		push_back(*it);
+	}
+	sz = lst.sz;
+}
 
 template<typename T>
 void LinkedList<T>::push_front(T val) {
@@ -108,6 +118,7 @@ template<typename T>
 T LinkedList<T>::pop_front()
 {
 	if (!HeadT) {
+		throw invalid_argument("There's no elements");
 		return T();
 	}
 	--sz;
@@ -137,6 +148,7 @@ template<typename T>
 inline T LinkedList<T>::pop_back()
 {
 	if (!TailT) {
+		throw invalid_argument("There's no elements");
 		return T();
 	}
 	--sz;
@@ -235,12 +247,12 @@ void LinkedList<T>::erase_at(size_t pos) {
 }
 
 template<typename T>
-void LinkedList<T>::print() const
-{
-	Node<T>* curr = HeadT;
-	std::cout << "List: " << curr->data;
-	while ((curr = curr->next) != nullptr) {
-		std::cout << "->" << curr->data;
+void LinkedList<T>::print() const {
+	iterator it = begin();
+	std::cout << "List: " << *it;
+	++it;
+	for(it; it != end(); ++it) {
+		std::cout << " -> " << *it;
 	}
 	std::cout << std::endl;
 }
@@ -248,15 +260,28 @@ void LinkedList<T>::print() const
 template<typename T>
 inline size_t LinkedList<T>::find(T key) const
 {
-	Node<T>* curr = HeadT;
 	size_t pos = 0;
-	while (curr != nullptr) {
-		if (curr->data == key)
+
+	for (iterator it = begin(); it != end(); ++it) {
+		if (*it == key)
 			return pos;
-		curr = curr->next;
 		++pos;
 	}
 	return size_t(-1);
+}
+
+template<typename T>
+void LinkedList<T>::initailizelist() {
+	destroylist();
+}
+
+template<typename T>
+void LinkedList<T>::destroylist() {
+	while (HeadT != nullptr) {
+		pop_front();
+	}
+	sz = 0;
+	HeadT = TailT = nullptr;
 }
 
 template<typename T>
@@ -267,20 +292,18 @@ inline LinkedList<T>& LinkedList<T>::operator+=(T val) {
 
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator+=(const LinkedList<T>& lst) {
-	Node<T>* curr = lst.HeadT;
-	while (curr != nullptr) {
-		push_back(curr->data);
-		curr = curr->next;
+	for (iterator it = lst.begin(); it != lst.end(); ++it) {
+		push_back(*it);
 	}
 	return *this;
 }
 
 template<typename T>
 ostream& operator<<(ostream& os, LinkedList<T>& lst) {
-	Node<T>* curr = lst.HeadT;
-	os << curr->data;
-	while ((curr = curr->next) != nullptr)
-		os << " -> " << curr->data;
+	iterator it = lst.begin();
+	os << *it;
+	for (it; it != lst.end(); ++it)
+		os << " -> " << *it;
 	return os;
 }
 

@@ -69,5 +69,6 @@ void UnorderedLinkedList<T>::deleteNode(const T& val) {
 			delete temp;
 			return;
 		}
+		curr = curr->next;
 	}
 }
