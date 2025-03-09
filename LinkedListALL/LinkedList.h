@@ -280,7 +280,6 @@ void LinkedList<T>::destroylist() {
 	while (HeadT != nullptr) {
 		pop_front();
 	}
-	sz = 0;
 	HeadT = TailT = nullptr;
 }
 

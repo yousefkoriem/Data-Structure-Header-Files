@@ -48,7 +48,7 @@ void OrderedLinkedList<T>::insert(const T& val) {
 		++LinkedListType<T>::count;
 		return;
 	}
-	if (*LinkedListType<T>::begin() <= val) {
+	if (*LinkedListType<T>::begin() > val) {
 		insertFirst(val);
 		return;
 	}
@@ -94,7 +94,7 @@ template<typename T>
 void OrderedLinkedList<T>::deleteNode(const T& val) {
 	assert(LinkedListType<T>::begin() != LinkedListType<T>::end());
 	Node<T>* curr = LinkedListType<T>::first;
-	while (curr->next != nullptr) {
+	while (curr->next != nullptr && curr->data <= val) {
 		if (curr->next->data == val) {
 			Node<T>* temp = curr->next;
 			curr->next = temp->next;

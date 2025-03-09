@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-#define MAX_SIZE 100
+#define MAX_SIZE 128
 
 template<typename T>
 class Darray {
@@ -52,3 +52,35 @@ public:
 	iterator end() const { return iterator(arr+sz); }
 
 };
+
+template<typename T>
+void Darray<T>::copyArray(const Darray<T>& Arr) {
+	if (this->begin() != this->end()) destroyArray();
+	if (Arr.begin() == Arr.end())
+		return;
+	for (iterator it = Arr.begin(); it != Arr.end(); ++it) {
+		push_back(*it);
+	}
+	sz = Arr.sz;
+}
+
+template<typename T>
+void Darray<T>::initalizeArray() {
+	distroyArray();
+}
+
+template<typename T>
+void Darray<T>::distroyArray() {
+	while (sz != 0) {
+		pop_back();
+	}
+}
+
+template<typename T>
+void Darray<T>::push_front(T val) {
+	if (sz == 0) {
+		arr[0] = val;
+
+	}
+}
+
