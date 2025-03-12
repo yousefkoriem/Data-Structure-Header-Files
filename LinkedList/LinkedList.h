@@ -85,12 +85,7 @@ public:
 	iterator begin() const { return iterator(HeadT); }
 	iterator end() const { return iterator(nullptr); }
 
-	void sepSplit(LinkedList<T>& pos, LinkedList<T>& neg) {
-		for (iterator it = begin(); it != end(); ++it) {
-			if (*it > 0) pos.push_back(*it);
-			else neg.push_back(*it);
-		}
-	}
+	void sepSplit(LinkedList<T>& pos, LinkedList<T>& neg);
  };
 
 
@@ -302,6 +297,14 @@ LinkedList<T>& LinkedList<T>::operator+=(const LinkedList<T>& lst) {
 		push_back(*it);
 	}
 	return *this;
+}
+
+template<typename T>
+void LinkedList<T>::sepSplit(LinkedList<T>& pos, LinkedList<T>& neg) {
+	for (iterator it = begin(); it != end(); ++it) {
+		if (*it > 0) pos.push_back(*it);
+		else neg.push_back(*it);
+	}
 }
 
 template<typename T>
