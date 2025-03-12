@@ -70,7 +70,7 @@ public:
 		if(pos == sz - 1)
 			return back();
 
-		iterator it = begin();
+		typename LinkedList<T>::iterator it = begin();
 		for (size_t i = 1; i <= pos && it != end(); ++i) {
 			++it;
 		}
@@ -84,7 +84,14 @@ public:
 
 	iterator begin() const { return iterator(HeadT); }
 	iterator end() const { return iterator(nullptr); }
-};
+
+	void sepSplit(LinkedList<T>& pos, LinkedList<T>& neg) {
+		for (iterator it = begin(); it != end(); ++it) {
+			if (*it > 0) pos.push_back(*it);
+			else neg.push_back(*it);
+		}
+	}
+ };
 
 
 
@@ -95,7 +102,7 @@ void LinkedList<T>::copyList(const LinkedList<T>& lst) {
 	if (this->begin() != this->end()) destroylist();
 	if (lst.begin() == lst.end())
 		return;
-	for (iterator it = lst.begin(); it != lst.end(); ++it) {
+	for (typename LinkedList<T>::iterator it = lst.begin(); it != lst.end(); ++it) {
 		push_back(*it);
 	}
 	sz = lst.sz;
@@ -248,7 +255,7 @@ void LinkedList<T>::erase_at(size_t pos) {
 
 template<typename T>
 void LinkedList<T>::print() const {
-	iterator it = begin();
+	typename LinkedList<T>::iterator it = begin();
 	std::cout << "List: " << *it;
 	++it;
 	for(it; it != end(); ++it) {
@@ -262,7 +269,7 @@ inline size_t LinkedList<T>::find(T key) const
 {
 	size_t pos = 0;
 
-	for (iterator it = begin(); it != end(); ++it) {
+	for (typename LinkedList<T>::iterator it = begin(); it != end(); ++it) {
 		if (*it == key)
 			return pos;
 		++pos;
@@ -280,7 +287,6 @@ void LinkedList<T>::destroylist() {
 	while (HeadT != nullptr) {
 		pop_front();
 	}
-	sz = 0;
 	HeadT = TailT = nullptr;
 }
 
@@ -292,7 +298,7 @@ inline LinkedList<T>& LinkedList<T>::operator+=(T val) {
 
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator+=(const LinkedList<T>& lst) {
-	for (iterator it = lst.begin(); it != lst.end(); ++it) {
+	for (typename LinkedList<T>::iterator it = lst.begin(); it != lst.end(); ++it) {
 		push_back(*it);
 	}
 	return *this;
@@ -300,9 +306,9 @@ LinkedList<T>& LinkedList<T>::operator+=(const LinkedList<T>& lst) {
 
 template<typename T>
 ostream& operator<<(ostream& os, LinkedList<T>& lst) {
-	iterator it = lst.begin();
+	typename LinkedList<T>::iterator it = lst.begin();
 	os << *it;
-	for (it; it != lst.end(); ++it)
+	for (++it; it != lst.end(); ++it)
 		os << " -> " << *it;
 	return os;
 }

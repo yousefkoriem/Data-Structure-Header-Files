@@ -1,31 +1,23 @@
 #include <iostream>
 #include "LinkedList.h"
-#include "OrderedLinkedList.h"
-#include "UnorderedLinkedList.h"
-#include "Darray.h"
 using namespace std;
 
 int main() {
-	OrderedLinkedList<int> lst;
-	lst.insert(5);
-	lst.insert(6);
-	lst.insert(7);
-	lst.insert(7);
-	lst.insert(9);
-	lst.insert(12);
-	lst.insert(15);
-	lst.insert(22);
-	lst.insert(22);
-	lst.insert(22);
-	
-	lst.print();
-	int prev = -1;
-	for (OrderedLinkedList<int>::iterator it = lst.begin(); it != lst.end(); ++it) {
-		if (prev == *it) {
-			lst.deleteNode(prev);
-		}
-		prev = *it;
-	}
+	LinkedList<int> lst, pos, neg;
 
-	lst.print();
+	lst.push_back(5);
+	lst.push_back(9);
+	lst.push_back(-7);
+	lst.push_back(-2);
+	lst.push_back(3);
+	lst.push_back(-5);
+	lst.push_back(1);
+	lst.push_back(6);
+	cout << "Origional List: " << lst << '\n';
+
+	lst.sepSplit(pos, neg);
+
+	cout << "Positive Numbers: " << pos << '\n';
+
+	cout << "negative Numbers: " << neg << '\n';
 }

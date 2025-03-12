@@ -1,4 +1,5 @@
-/*#include <iostream>
+/*
+#include <iostream>
 #include "OrderedLinkedList.h"
 using namespace std;
 
@@ -16,14 +17,7 @@ int main() {
 	lst.insert(22);
 
 	lst.print();
-	OrderedLinkedList<int>::iterator it = lst.begin();
-	int prev = *it;
-	for (++it; it != lst.end(); ++it) {
-		if (prev == *it) {
-			lst.deleteNode(prev);
-		}
-		prev = *it;
-	}
+	lst.remDuplicate();
 
 	lst.print();
 }
