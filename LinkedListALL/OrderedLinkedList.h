@@ -3,7 +3,6 @@
 #include "LinkedListIterator.h"
 #include "LinkedListType.h"
 #include <cassert>
-#include <algorithm>
 #include <functional>
 
 // Making Shorthand for Node
@@ -117,7 +116,7 @@ void OrderedLinkedList<T, Compare>::deleteNode(const T& val) {
 
 template<typename T, class Compare>
 void OrderedLinkedList<T, Compare>::remDuplicate() {
-	OrderedLinkedList<int>::iterator it = LinkedListType<T>::begin();
+	typename OrderedLinkedList<T,Compare>::iterator it = LinkedListType<T>::begin();
 	int prev = *it;
 	for (++it; it != LinkedListType<T>::end(); ++it) {
 		if (prev == *it) {

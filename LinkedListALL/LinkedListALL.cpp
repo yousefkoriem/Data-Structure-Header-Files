@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LinkedList.h"
+#include "OrderedLinkedList.h"
 using namespace std;
 
 int main() {
@@ -20,4 +21,23 @@ int main() {
 	cout << "Positive Numbers: " << pos << '\n';
 
 	cout << "negative Numbers: " << neg << '\n';
+
+	cout << "\n\n";
+
+	OrderedLinkedList<int> olst;
+	olst.insert(5);
+	olst.insert(6);
+	olst.insert(7);
+	olst.insert(7);
+	olst.insert(9);
+	olst.insert(12);
+	olst.insert(15);
+	olst.insert(22);
+	olst.insert(22);
+	olst.insert(22);
+
+	olst.print();
+	olst.remDuplicate();
+
+	olst.print();
 }
