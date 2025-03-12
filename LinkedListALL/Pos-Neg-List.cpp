@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-	LinkedList<int> lst;
+	LinkedList<int> lst, pos, neg;
 
 	lst.push_back(5);
 	lst.push_back(9);
@@ -14,15 +14,12 @@ int main() {
 	lst.push_back(-5);
 	lst.push_back(1);
 	lst.push_back(6);
+	cout << "Origional List: " << lst << '\n';
 
-	LinkedList<int> pos, neg;
+	lst.sepSplit(pos, neg);
 
-	for (LinkedList<int>::iterator it = lst.begin(); it != lst.end(); ++it) {
-		if (*it > 0) pos.push_back(*it);
-		else neg.push_back(*it);
-	}
+	cout << "Positive Numbers: " << pos << '\n';
 
-	pos.print();
-	neg.print();
+	cout << "negative Numbers: " << neg << '\n';
 }
 */

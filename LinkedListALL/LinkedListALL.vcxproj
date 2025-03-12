@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="LinkedListALL.cpp" />
     <ClCompile Include="Pos-Neg-List.cpp" />
+    <ClCompile Include="RemDuplicate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Darray.h" />

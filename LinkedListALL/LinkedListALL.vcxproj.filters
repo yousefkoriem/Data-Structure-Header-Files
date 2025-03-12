@@ -21,6 +21,9 @@
     <ClCompile Include="Pos-Neg-List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RemDuplicate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedList.h">
